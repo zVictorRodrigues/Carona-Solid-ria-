@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cadastre-se</title>
+</head>
+<body>
+
+<div class="header">
+    <img src="/img/Carona-Solidária.jpg" alt="Logo" class="logo">
+    <div class="divider"></div> <!-- Linha divisória -->
+</div>
+
+<div class="container">
+    <h3>Cadastre-se</h3>
+    <br>
+    <h4>FMP Carona Solidária</h4>
+
+    <form id="formulario">
+        <div class="container__NomeSenha">
+            <div>
+                <label for="name">Nome completo</label>
+                <input type="text" name="Nome" id="name" required>
+            </div>
+            <div class="age">
+                <label for="idade">Data de Nascimento</label>
+                <input type="date" name="Idade" id="idade" required>
+            </div>
+        </div>
+
+        <hr>
+        <div>
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" id="cpf" required>
+        </div>
+
+        <div>
+            <label for="telefone">Telefone</label>
+            <input type="text" name="telefone" id="telefone" required>
+        </div>
+
+        <div>
+            <label for="tipoUsuario">Tipo de usuário</label>
+            <select name="tipoUsuario" id="tipoUsuario" required>
+                <option value="">Selecione...</option>
+                <option value="aluno">Aluno</option>
+                <option value="funcionario">Funcionário</option>
+            </select>
+        </div>
+
+        <div id="tipoFuncionario" style="display: none;">
+            <label for="tipoFuncionario">Tipo de funcionário</label>
+            <select name="tipoFuncionario" id="tipoFuncionario">
+                <option value="">Selecione...</option>
+                <option value="professor">Professor</option>
+                <option value="vigia">Vigia</option>
+                <option value="serviços Gerais">Serviços Gerais</option>
+                <option value="administracao">Administração</option>
+                <option value="secretaria">Secretaria</option>
+                <option value="direção">Direção</option>
+            </select>
+        </div>
+
+        <hr>
+
+        <label for="email">Email Institucional</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="Senha">Senha</label>
+        <input type="password" name="Senha" id="Senha" required>
+
+        <hr>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var formulario = document.getElementById("formulario");
+        var tipoUsuarioSelect = document.getElementById("tipoUsuario");
+        var tipoFuncionarioDiv = document.getElementById("tipoFuncionario");
+
+        // Adiciona um ouvinte de evento para monitorar as mudanças no menu suspenso "Tipo de usuário"
+        tipoUsuarioSelect.addEventListener("change", function() {
+            // Verifica se a opção "Funcionário" foi selecionada
+            if (tipoUsuarioSelect.value === "funcionario") {
+                // Exibe o campo "Tipo de funcionário"
+                tipoFuncionarioDiv.style.display = "block";
+            } else {
+                // Oculta o campo "Tipo de funcionário"
+                tipoFuncionarioDiv.style.display = "none";
+            }
+        });
+        formulario.addEventListener("submit", function(event) {
+    event.preventDefault(); // Impede o envio do formulário
+
+    // Obter dados do formulário
+    var formData = new FormData(formulario);
+    var formObject = {};
+    formData.forEach(function(value, key){
+        formObject[key] = value;
+    });
+
+    // Salvar informações no localStorage
+    localStorage.setItem('userData', JSON.stringify(formObject)); // Usar 'userData' como chave
+
+    // Redirecionar para a tela de login
+    window.location.href = "login.html";
+});
+
+
+    });
+</script>
+
+
+</body>
+</html>

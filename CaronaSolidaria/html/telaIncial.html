@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/TelaInicial.css">
+    <title>Tela Principal</title>
+</head>
+<body>
+
+<div class="header">
+    <img src="/img/Logo-FMP-FINAL.png" alt="Logo" class="logo">
+    <button class="profile-button" id="profileButton">
+        <img src="/img/iconperfil.png" alt="Perfil" class="profile-icon">
+    </button>
+    <div class="notification-container">
+        <button class="notification-button" id="notificationButton">
+            <img src="/img/notication.png" alt="Notificações" class="notification-icon">
+        </button>
+        <div id="notificationBar" class="notification-bar hidden">
+            <button class="remove-notification" onclick="removerNotificacao(this.parentElement)">
+                X
+            </button>
+            <p class="notification-text">Sem notificações</p> 
+        </div>
+    </div>
+    
+</div>
+
+<div class="container">
+    <h3>Bem-vindo ao Carona Solidária da Faculdade Municipal de Palhoça</h3>
+    <h4>O que você deseja fazer?</h4>
+    <div class="options">
+        <a href="/html/ReceberCarona.html"><button id="receiveRide">Receber Carona</button></a>
+        <a href="/html/oferecerCarona.html"><button id="offerRide">Oferecer Carona</button></a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeButton">&times;</span>
+        <h2>Perfil do Usuário</h2>
+        <div id="profileInfo">
+            <div class="profile-picture" style=>
+                <input type="file" id="fotoPerfil" accept="image/*">
+                <label for="fotoPerfil">Alterar Foto</label>
+            </div>
+            <br>
+            <br>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+            <label for="idade">Data de Nascimento:</label>
+            <input type="text" id="idade" required>
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" readonly>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" readonly>
+            <label for="email">Email:</label>
+            <input type="email" id="email" readonly>
+            <label for="tipoUsuario">Tipo de Usuário:</label>
+            <span id="tipoUsuarioText"></span> 
+            <label for="tipoFuncionario"></label>
+            <span id="tipoFuncionarioText"></span>
+            <br>
+            <button class="view-history-button">Ver Histórico de Caronas</button>
+            <br>
+            <button onclick="logout()" class="logout-button"> <!-- Adicionando classe de estilo ao botão de logout -->
+                <img src="/img/logout.png" alt="Logout" class="logout-icon"> <!-- Adicionando o ícone de logout -->
+                Sair
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+    var profileButton = document.getElementById("profileButton");
+    var profileModal = document.getElementById("profileModal");
+    var closeButton = document.getElementById("closeButton");
+    var notificationButton = document.getElementById("notificationButton");
+    var notificationBar = document.getElementById("notificationBar");
+
+    profileButton.addEventListener("click", function() {
+        profileModal.style.display = "block";
+        // Recupera os dados do usuário logado do localStorage
+        var loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        if (loggedInUser) {
+            document.getElementById("nome").value = loggedInUser.Nome || "";
+            document.getElementById("idade").value = loggedInUser.Idade || "";
+            document.getElementById("cpf").value = loggedInUser.cpf || "";
+            document.getElementById("telefone").value = loggedInUser.telefone || "";
+            document.getElementById("email").value = loggedInUser.email || "";
+            document.getElementById("tipoUsuarioText").textContent = loggedInUser.tipoUsuario || "";
+            document.getElementById("tipoFuncionarioText").textContent = loggedInUser.tipoFuncionario || "";
+        }
+    });
+
+        closeButton.addEventListener("click", function() {
+            profileModal.style.display = "none";
+        });
+
+        notificationButton.addEventListener("click", function() {
+            if (notificationBar.classList.contains("hidden")) {
+                notificationBar.classList.remove("hidden");
+            } else {
+                notificationBar.classList.add("hidden");
+            }
+        });
+
+        // Adiciona um ouvinte de evento de clique ao documento inteiro
+        document.addEventListener("click", function(event) {
+            var isClickInsideNotification = notificationButton.contains(event.target) || notificationBar.contains(event.target);
+            // Verifica se o clique ocorreu dentro da barra de notificação ou no botão de notificação
+            if (!isClickInsideNotification) {
+                if (!notificationBar.classList.contains("hidden")) {
+                    notificationBar.classList.add("hidden");
+                }
+            }
+        });
+    });
+
+    // Função para formatar CPF
+    function formatarCPF(cpf) {
+        if (!cpf) return "";
+        return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+    }
+
+    // Função para formatar telefone
+    function formatarTelefone(telefone) {
+        if (!telefone) return "";
+        return telefone.replace(/^(\d{2})(\d{4,5})(\d{4})$/, "($1) $2-$3");
+    }
+
+    
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var userData = JSON.parse(localStorage.getItem("loggedInUser"));
+        if (!userData) {
+            // Se os dados do usuário não estiverem presentes, redirecionar para a página de login
+            window.location.href = "/html/login.html";
+        }
+        // Restante do seu código...
+    });
+    
+    // Função para fazer logout
+    function logout() {
+        // Limpa os dados de usuário do localStorage
+        localStorage.removeItem('loggedInUser');
+        // Redireciona para a tela de login
+        window.location.href = "/html/login.html";
+    }
+
+    
+
+    </script>
+    
+
+</body>
+</html>

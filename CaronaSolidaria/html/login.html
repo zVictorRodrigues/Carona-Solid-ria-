@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+
+<div class="header">
+    <img src="/img/Carona-Solidária.jpg" alt="Logo" class="logo">
+    <div class="divider"></div> <!-- Linha divisória -->
+</div>
+
+<div class="container">
+    <h3>Login</h3>
+    <br>
+    <h4>FMP Carona Solidária</h4>
+
+    <form id="loginForm">
+        <div class="container__NomeSenha">
+            <div>
+                <label for="cpf">CPF</label>
+                <input type="text" name="cpf" id="cpf" required>
+            </div>
+            <div class="age">
+                <label for="senha">Senha</label>
+                <input type="password" name="senha" id="senha" required>
+            </div>
+        </div>
+
+        <button type="button" onclick="login()">Entrar</button>
+        <br>
+        <br>
+        <p>Não tem uma conta? <a href="/html/index.html">Cadastre-se</a></p>
+    </form>
+</div>
+
+<script>
+    function login() {
+        var cpf = document.getElementById("cpf").value;
+        var senha = document.getElementById("senha").value;
+        var userData = JSON.parse(localStorage.getItem('userData')); // Recuperar dados do usuário
+    
+        if (userData) {
+            if (userData.cpf === cpf && userData.Senha === senha) { // Verificar CPF e senha
+                localStorage.setItem('loggedInUser', JSON.stringify(userData)); // Salvar dados do usuário logado
+                window.location.href = "telaincial.html"; // Redirecionar para a tela inicial
+            } else {
+                alert("CPF ou senha incorretos. Por favor, tente novamente.");
+            }
+        } else {
+            alert("Usuário não encontrado. Por favor, cadastre-se ou verifique suas credenciais.");
+        }
+    }
+    </script>
+    
+
+
+</body>
+</html>

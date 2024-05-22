@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/paginasCarona.css">
+    <title>Receber Carona</title>
+</head>
+<body>
+    <div class="container">
+        <div class="text-container">
+            <h4 class="page-heading">Digite o CEP de destino para encontrar caronas disponíveis:</h4>
+        </div>
+
+        <div id="receiveRideForm" class="form-container">
+            <h4>Informe o CEP de destino:</h4>
+            <div class="location-options">
+                <label for="cepDestino"></label>
+                <input type="text" id="cepDestino" placeholder="Digite o CEP de destino">
+                <button id="buscar">Buscar</button>
+            </div>
+            <div id="infoCarona"></div>
+        </div>
+    </div>
+    
+    <div class="back-button">
+        <a href="/html/telaIncial.html"> < Voltar</a>
+    </div>
+
+    <div id="caronaModal" class="modal">
+        <div class="modal-content">           
+            <div id="caronaModalContent"></div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="caronaModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal('caronaModal')">&times;</span>
+            <h2>Detalhes da Carona</h2>
+            <div id="caronaModalContent"></div>
+            <button id="solicitarCaronaBtn">Solicitar Carona</button>
+        </div>
+    </div>
+
+    <div id="caronaCards" class="carona-cards-container"></div>
+   
+    <script src="/js/buscarCarona.js"></script>
+</body>
+</html>
+
+
